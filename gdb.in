@@ -23,11 +23,10 @@ set ((USART_InitTypeDef*)$osp)->USART_Mode = USART_Mode_Rx | USART_Mode_Tx
 call USART_Init(USART2, $osp)
 call USART_Cmd(USART2, ENABLE)
 c
-set logging on
+
 while(*out_str)
-call USART_SendData(USART2, *out_str)
-set out_str = out_str + 1
+    call USART_SendData(USART2, *out_str)
+    append value gdb.log *out_str
+    set out_str = out_str + 1
 end
-set logging off
-detach
 quit
